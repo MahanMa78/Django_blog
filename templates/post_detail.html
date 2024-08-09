@@ -33,12 +33,7 @@
                   <img src="{{ post.photo.url }}" alt="" class="img-fluid">
 
                 </div> 
-                {% comment %} {% if post.photo %}
-                    <p>Photo URL: {{ post.photo.url }}</p>
-                {% else %}
-                    <p>No photo available.</p>
-                {% endif %}   {% endcomment %}
-  
+
                 <h2 class="entry-title">
                   <a href="blog-single.html">{{ post.title }}</a>
                 </h2>
@@ -55,7 +50,7 @@
                   <p>{{ post.body }}</p>
                 </div>
   
-                {% if user.is_authenticated %}
+                {% if user.username == post.author.username %}
                     <div class="entry-footer">                  
                     <ul class="cats">
                         <i class="bi bi-pen-fill"></i>
@@ -64,21 +59,21 @@
                         <li><a href="{% url 'delete' post.pk %}">Delete</a></li>
                     </ul>                                    
                     </div>
-                {% endif %}
+                  {% endif %}
   
               </article><!-- End blog entry -->
   
               <div class="blog-author d-flex align-items-center">
-                <img src="{% static 'assets/img/blog/blog-author.jpg' %}" class="rounded-circle float-left" alt="">
+                <img src="{{ post.author.photo.url }}" class="rounded-circle float-left" alt="">
                 <div>
-                  <h4>Jane Smith</h4>
+                  <h4>{{ post.author.username }}</h4>
                   <div class="social-links">
                     <a href="https://twitters.com/#"><i class="bi bi-twitter"></i></a>
                     <a href="https://facebook.com/#"><i class="bi bi-facebook"></i></a>
                     <a href="https://instagram.com/#"><i class="biu bi-instagram"></i></a>
                   </div>
                   <p>
-                    Itaque quidem optio quia voluptatibus dolorem dolor. Modi eum sed possimus accusantium. Quas repellat voluptatem officia numquam sint aspernatur voluptas. Esse et accusantium ut unde voluptas.
+                    {{ post.author.about }}
                   </p>
                 </div>
               </div><!-- End blog author bio -->
