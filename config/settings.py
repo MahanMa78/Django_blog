@@ -1,3 +1,4 @@
+import os
 """
 Django settings for config project.
 
@@ -43,15 +44,18 @@ INSTALLED_APPS = [
     "crispy_bootstrap4",
 
     #Local
-    'post',
+    'blog',
     'accounts',
 ]
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -138,3 +142,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#Media Folder Settings
+MEDIA_ROOT = os.path.join(BASE_DIR , 'media') #zamani ke bekhahim yek ax zakhire konim dar in masir zakhire mikone
+MEDIA_URL = '/media/' #zamani ke dar dakhel fazaye net bekhahim yek ax ro bebinm az in masir estefade mikone

@@ -19,7 +19,7 @@ from django.urls import path , include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('' , include('post.urls')),
+    path('' , include('blog.urls')),
     path('accounts/' , include('django.contrib.auth.urls')),#in faghat baraye login va logout kar mikone
     #ma bayad yek folder dar templates/registraion besazim
     path('accounts/' , include('accounts.urls')),
