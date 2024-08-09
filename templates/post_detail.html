@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends '_base.html' %}
 {% load static %}
 
 {% block content %}
@@ -31,7 +31,13 @@
   
                 <div class="entry-img">
                   <img src="{{ post.photo.url }}" alt="" class="img-fluid">
-                </div>
+
+                </div> 
+                {% comment %} {% if post.photo %}
+                    <p>Photo URL: {{ post.photo.url }}</p>
+                {% else %}
+                    <p>No photo available.</p>
+                {% endif %}   {% endcomment %}
   
                 <h2 class="entry-title">
                   <a href="blog-single.html">{{ post.title }}</a>
