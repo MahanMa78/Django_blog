@@ -4,7 +4,7 @@ from .models import Post , Comment
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title' , 'excerpt' , 'body' , 'author' , 'date' , 'photo']
+        fields = ['title' , 'excerpt' , 'body'  , 'date' , 'photo'] # ma 'author' ro hazf kardim ta mostaghiman khode on kasi ke dare post ro minevise biad va post ro montasher kone
         
 
 class PostUpdateForm(forms.ModelForm):

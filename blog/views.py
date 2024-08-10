@@ -35,6 +35,14 @@ class PostNewView(CreateView):
     success_url = reverse_lazy('home')
     template_name = 'post_new.html'
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    
+    #in ham mishe jaye success_url nevesht
+    # def get_success_url(self):
+    #     return reverse_lazy('home')
+
 
 #ma bayad yek bar baraye get request class benevisim va yek bar baraye post request
 class CommentGet(DetailView):
