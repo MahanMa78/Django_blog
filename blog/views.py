@@ -1,13 +1,32 @@
-from django.views.generic import  CreateView , DetailView , DeleteView ,ListView
+from django.http import HttpRequest, HttpResponse
+from django.views.generic import  CreateView , DetailView , DeleteView ,ListView , View
 from django.views.generic.edit import UpdateView , DeleteView
 from .models import Post
 from .forms import PostForm , PostUpdateForm
 from django.urls import reverse_lazy , reverse
+from django.core.paginator import Paginator
+from django.shortcuts import render
 
-class HomeView(ListView):
-    model = Post
+class HomeView(View): #bayad az ListView be View taghir bedim
+    # model = Post
     template_name = 'home.html'
     context_object_name = 'post_list'
+    paginate_by = 1 #manzor tedad post hay ke dakhel yek safhe mishe did
+
+    def get(self, request):
+        posts = Post.objects.all()
+        paginator = Paginator(posts,self.paginate_by) #tamam safahat dakhelsh hast va har safhe ham tedadi post dakhelesh dare
+
+        page_number = request.GET.get('page') #pagi ke karbar mikhad estekhraj beshe
+        page_obj = paginator.get_page(page_number) #shomare pagi ke karbar mikhad ro estekhraj kon va beriz dakhel page_obj
+
+        context = {
+            'post_list' : page_obj, #ma on pagi ke mored nazar karbar hast ro rikhtim dakhel post_list
+        }
+
+        return render(request , self.template_name , context) #manzor inke boro to template ke man mikham va be hamrah mohtavie ke man behet midam
+    
+
     
 
 class PostNewView(CreateView):
