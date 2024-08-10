@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView , TemplateView , View
-from .forms import CustomUserCreationForm
+from django.views.generic import CreateView , TemplateView , View ,UpdateView
+from .forms import CustomUserCreationForm , CustomUserChangeForm
 from .models import CustomUser
 
 class SignUpView(CreateView):
@@ -11,3 +11,17 @@ class SignUpView(CreateView):
 class ProfileView(TemplateView):
     model = CustomUser
     template_name = 'profile.html'
+
+
+class ProfileUpdateView(UpdateView):
+    model = CustomUser
+    fields = ['first_name' , 'last_name' , 'email' , 'photo' ,'age' , 'about']
+    template_name = 'profile_edit.html'
+    success_url = reverse_lazy('profile')
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    # def form_valid(self, form):
+    #     form.instance.author = self.request.user
+    #     return super().form_valid(form)
