@@ -7,7 +7,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Moderna Bootstrap Template - Index</title>
+  
+  {% comment %} <title>Moderna Bootstrap Template - Index</title> {% endcomment %}
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -46,7 +47,7 @@
     <div class="container d-flex justify-content-between align-items-center">
 
       <div class="logo">
-        <h1 class="text-light"><a href="index.html"><span>Moderna</span></a></h1>
+        <h1 class="text-light"><a href="index.html"><span>{% block title %}{% endblock title %}</span></a></h1>
         <!-- Uncomment below if you prefer to use an image logo -->
         <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
       </div>
@@ -64,6 +65,7 @@
                 </form>
                 <li><a href="{% url 'password_change' %}">Password Change</a></li>
                 <li><a href="{% url "password_reset" %}">Password Reset</a></li>
+                <li><a href="{% url "profile" %}">Profile</a></li>
               </ul>
             </li>
             
