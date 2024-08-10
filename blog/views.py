@@ -1,11 +1,12 @@
 from django.http import HttpRequest, HttpResponse
-from django.views.generic import  CreateView , DetailView , DeleteView ,ListView , View
+from django.views.generic import  CreateView , DetailView , DeleteView ,ListView , View , FormView
 from django.views.generic.edit import UpdateView , DeleteView
 from .models import Post
-from .forms import PostForm , PostUpdateForm
+from .forms import PostForm , PostUpdateForm , CommentForm
 from django.urls import reverse_lazy , reverse
 from django.core.paginator import Paginator
 from django.shortcuts import render
+from django.views.generic.detail import SingleObjectMixin #be vasile in mohtavaye ke behesh atach shode be yek url ro estekhraj mikonim
 
 class HomeView(View): #bayad az ListView be View taghir bedim
     # model = Post
@@ -27,7 +28,6 @@ class HomeView(View): #bayad az ListView be View taghir bedim
         return render(request , self.template_name , context) #manzor inke boro to template ke man mikham va be hamrah mohtavie ke man behet midam
     
 
-    
 
 class PostNewView(CreateView):
     model = Post
@@ -36,9 +36,47 @@ class PostNewView(CreateView):
     template_name = 'post_new.html'
 
 
-class PostDetailView(DetailView):
+#ma bayad yek bar baraye get request class benevisim va yek bar baraye post request
+class CommentGet(DetailView):
     model = Post
     template_name = 'post_detail.html'
+
+    def get_context_data(self , **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        return context
+
+
+# ma ham be SingleObjectMixin niaz darim va ham be FormView ta Form ro ersal konim
+class CommentPost(SingleObjectMixin , FormView):
+    model = Post
+    form_class = CommentForm
+    template_name = 'post_detail.html'
+
+    def post(self , request , *args , **kwargs ):
+        self.object = self.get_object() #get_object() az SingleObjectMixin miad va mire post feli ro baraye man kolan estekhraj mikone va baraye man miare
+        return super().post(request,*args, **kwargs)
+    
+    def form_valid(self ,form ): #miad form ro ke az samte karbar miad ro check mikone
+        comment = form.save(commit = False) #manzor az commit = False inke felan dakhel database zakhire nmishe
+        comment.post = self.object
+        comment.author = self.request.user
+        comment.save()
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        post = self.get_object()
+        return reverse('post_detail' , kwargs={'pk' : post.pk})
+
+
+class PostDetailView(View):
+    def get(self, request , *args , **kwargs):
+        view = CommentGet.as_view()
+        return view(request , *args , **kwargs)
+    
+    def post(self, request , *args , **kwargs):
+        view = CommentPost.as_view()
+        return view(request , *args , **kwargs)
 
 
 class PostUpdateView(UpdateView):
