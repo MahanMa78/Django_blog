@@ -82,6 +82,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 # other context_processors
                 'blog.context_processors.recent_posts',
+                'blog.context_processors.categories_posts',
+                'blog.context_processors.count_categories_posts',
             ],
         },
     },
