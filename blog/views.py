@@ -32,7 +32,6 @@ class HomeView(View): #bayad az ListView be View taghir bedim
 class PostNewView(CreateView):
     model = Post
     form_class = PostForm #mishe jash nevesht --> fields = ['title' , 'excerpt' , 'body' , 'autthor' , 'date' , 'photo']
-    fields = ['first_name', 'last_name', 'email']
     success_url = reverse_lazy('home')
     template_name = 'post_new.html'
 

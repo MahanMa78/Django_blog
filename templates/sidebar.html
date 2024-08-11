@@ -32,9 +32,8 @@
                         <h4><a href="{% url "post_detail" post.pk %}">{{ post.title }}</a></h4>
                         <time datetime="2020-01-01">{{ post.date }}</time>
                     </div>      
-        {% endfor %} 
-        </div><!-- End sidebar recent posts-->
-
+                {% endfor %} 
+            </div><!-- End sidebar recent posts-->
       {% else %}
         <p>No blog post is available.</p>           
       {% endif %}
