@@ -2,6 +2,7 @@ from django.db import models
 from datetime import date
 from django.urls import reverse
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 
 class Category(models.Model):
@@ -19,6 +20,7 @@ class Post(models.Model):
     date = models.DateField(default=date.today)
     photo = models.ImageField(upload_to='photo/%Y/%m/%d')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL,null=True,blank=True , related_query_name = 'category_post', related_name='posts')
+    tags = TaggableManager()
 
     def __str__(self):
         return self.title

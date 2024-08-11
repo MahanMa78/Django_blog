@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #third party
     'crispy_forms',
     "crispy_bootstrap4",
+    'taggit',
 
     #Local
     'blog',
@@ -84,6 +85,7 @@ TEMPLATES = [
                 'blog.context_processors.recent_posts',
                 'blog.context_processors.categories_posts',
                 'blog.context_processors.count_categories_posts',
+                'blog.context_processors.posts_by_tag',
             ],
         },
     },

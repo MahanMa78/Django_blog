@@ -1,5 +1,6 @@
 from .models import Post , Category
 from django.db.models import Count
+from taggit.models import Tag
 
 def recent_posts(request):
     recent_posts = Post.objects.order_by('-date')[:5]
@@ -18,3 +19,6 @@ def count_categories_posts(request):
     count_categories_posts = Category.objects.annotate(post_count=Count('category_post'))
     return {'count_categories_posts' : count_categories_posts}
     
+def posts_by_tag(request):
+    posts_by_tag = Tag.objects.annotate(post_count=Count('taggit_taggeditem_items'))
+    return {'posts_by_tag' : posts_by_tag}
