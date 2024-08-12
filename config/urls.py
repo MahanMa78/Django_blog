@@ -25,4 +25,6 @@ urlpatterns = [
     path('accounts/' , include('django.contrib.auth.urls')),#in faghat baraye login va logout kar mikone
     #ma bayad yek folder dar templates/registraion besazim
     path('accounts/' , include('accounts.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

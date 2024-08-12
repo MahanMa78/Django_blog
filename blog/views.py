@@ -7,6 +7,9 @@ from django.urls import reverse_lazy , reverse
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.views.generic.detail import SingleObjectMixin #be vasile in mohtavaye ke behesh atach shode be yek url ro estekhraj mikonim
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 
 class HomeView(View): #bayad az ListView be View taghir bedim
     # model = Post
@@ -110,3 +113,32 @@ def search_view(request):
             results = Post.objects.filter(title__icontains=query)  # جستجو در عنوان پست‌ها
 
     return render(request, 'search_results.html', {'form': form, 'query': query, 'results': results})
+
+
+class AllPostsAPIView(APIView):
+
+    def get(self , request ,format = None):
+        try:
+            all_posts = Post.objects.filter(active = True).order_by('-date')[:10]
+            data = []
+            for post in all_posts:
+                data.append({
+                    'title' : post.title,
+                    'excerpt' : post.excerpt,
+                    'body' : post.body ,
+                    'author' : post.author.username ,
+                    'date' : post.date ,
+                    'photo' : post.photo.url if post.photo else None , 
+                    'category' : {
+                        'id': post.category.id if post.category else None,
+                        'title': post.category.title if post.category else None,
+                    }, 
+                    'tags': [tag.name for tag in post.tags.all()],
+                })
+
+            return Response({'data': data } , status=status.HTTP_200_OK)
+        except:
+            return Response({'status' : "Internal Server Error  , We'll Check It Latter"},
+                            status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
