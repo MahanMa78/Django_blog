@@ -3,7 +3,7 @@ from django.db.models import Count
 from taggit.models import Tag
 
 def recent_posts(request):
-    recent_posts = Post.objects.order_by('-date')[:5]
+    recent_posts = Post.objects.filter(active =True).order_by('-date')[:5]
     return {'recent_posts' : recent_posts}
 
 #ma dar inja darim query mizanim be data base va yekseri etelaat migirm , hala ba estefade az in etelaat dar dakhel safhe html azash estefadeh mikonim
