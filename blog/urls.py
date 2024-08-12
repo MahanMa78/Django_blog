@@ -5,12 +5,13 @@ from .views import (
     PostDetailView ,
     PostDeleteView ,
     PostUpdateView ,
- 
+    search_view,
     
 )
 
 urlpatterns = [
     path('' , HomeView.as_view() , name='home'),
+    path('search/', search_view, name='search'),
     path("post/new/", PostNewView.as_view() , name='newpost'),
     path('post/<int:pk>/', PostDetailView.as_view()  , name='post_detail'),
     path('post/update/<int:pk>' , PostUpdateView.as_view() , name='update'),

@@ -86,6 +86,7 @@ TEMPLATES = [
                 'blog.context_processors.categories_posts',
                 'blog.context_processors.count_categories_posts',
                 'blog.context_processors.posts_by_tag',
+                'blog.context_processors.search_form',
             ],
         },
     },

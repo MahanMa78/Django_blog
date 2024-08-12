@@ -2,7 +2,7 @@ from django.http import HttpRequest, HttpResponse
 from django.views.generic import  CreateView , DetailView , DeleteView ,ListView , View , FormView
 from django.views.generic.edit import UpdateView , DeleteView
 from .models import Post
-from .forms import PostForm , PostUpdateForm , CommentForm
+from .forms import PostForm , PostUpdateForm , CommentForm , SearchForm
 from django.urls import reverse_lazy , reverse
 from django.core.paginator import Paginator
 from django.shortcuts import render
@@ -97,3 +97,16 @@ class PostDeleteView(DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('home')
+
+def search_view(request):
+    form = SearchForm()
+    query = None
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Post.objects.filter(title__icontains=query)  # جستجو در عنوان پست‌ها
+
+    return render(request, 'search_results.html', {'form': form, 'query': query, 'results': results})

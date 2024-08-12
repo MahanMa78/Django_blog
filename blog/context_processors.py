@@ -1,6 +1,7 @@
 from .models import Post , Category
 from django.db.models import Count
 from taggit.models import Tag
+from .forms import SearchForm
 
 def recent_posts(request):
     recent_posts = Post.objects.filter(active =True).order_by('-date')[:5]
@@ -22,3 +23,6 @@ def count_categories_posts(request):
 def posts_by_tag(request):
     posts_by_tag = Tag.objects.annotate(post_count=Count('taggit_taggeditem_items'))
     return {'posts_by_tag' : posts_by_tag}
+
+def search_form(request):
+    return {'search_form': SearchForm()}
