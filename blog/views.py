@@ -10,6 +10,7 @@ from django.views.generic.detail import SingleObjectMixin #be vasile in mohtavay
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from . import serializers
 
 class HomeView(View): #bayad az ListView be View taghir bedim
     # model = Post
@@ -116,7 +117,7 @@ def search_view(request):
 
 
 class AllPostsAPIView(APIView):
-
+# baraye search kardanesh bayad benevisim : http://localhost:8000/post/all/
     def get(self , request ,format = None):
         try:
             all_posts = Post.objects.filter(active = True).order_by('-date')[:10]
@@ -141,4 +142,16 @@ class AllPostsAPIView(APIView):
             return Response({'status' : "Internal Server Error  , We'll Check It Latter"},
                             status = status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-        
+    
+class SinglePostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek maghale ro search konim
+ # baraye search kardanesh bayad benevisim : http://localhost:8000/post/?post_title=
+    def get(self , request , format = None ):
+        try:
+            post_title = request.GET['post_title']
+            post = Post.objects.filter(title__contains = post_title)
+            serialized_data = serializers.SinglePostSerializers(post , many = True)
+            data = serialized_data.data
+
+            return Response({"data" : data} , status=status.HTTP_200_OK)
+        except:
+            return Response({"status" : "Internal Server Error"} ,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
