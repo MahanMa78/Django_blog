@@ -54,7 +54,7 @@
       
                     <div class="entry-content">
                       <p>
-                        {{ post.excerpt }}
+                        {{ post.excerpt|safe }}
                       </p>
                       <div class="read-more">
                         <a href="{% url 'post_detail' post.pk  %}">Read More</a>

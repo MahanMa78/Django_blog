@@ -3,7 +3,7 @@ from datetime import date
 from django.urls import reverse
 from django.utils import timezone
 from taggit.managers import TaggableManager
-
+from ckeditor.fields import RichTextField
 
 class Category(models.Model):
     title = models.CharField(max_length=128 ,default=None )
@@ -14,8 +14,8 @@ class Category(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=255)
-    excerpt = models.TextField()
-    body = models.TextField()
+    excerpt = RichTextField()
+    body = RichTextField()
     author = models.ForeignKey('accounts.CustomUser' , on_delete=models.CASCADE)
     date = models.DateField(default=date.today)
     photo = models.ImageField(upload_to='photo/%Y/%m/%d')
