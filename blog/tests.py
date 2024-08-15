@@ -31,3 +31,23 @@ class BlogListViewTest(TestCase):
 
         response = self.client.get(reverse('home'))
         self.assertContains(response , 'some lines' )
+
+
+    def test_blog_detail_view_url(self):
+        response = self.client.get('/post/new/')
+        self.assertEqual(response.status_code , 200)
+
+    
+    def test_blog_detail_page(self):
+        user = CustomUser.objects.create_user(username='mahan', password='password')
+        post = Post.objects.create(
+                title='post 1' ,
+                excerpt = 'some lines' ,
+                body = 'more lines',
+                author = user,
+                date = '2024-08-21' , 
+                photo = '\media\photo\2024\08\09\Coding_wallpaper_by_Sajas823_-_Download_on_ZEDGE___eacb.jpg',
+                active = True,)
+        
+        response = self.client.get(reverse('post_detail', kwargs={'pk': post.pk}))
+        self.assertContains(response , 'more lines')
