@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse
-from django.views.generic import  CreateView , DetailView , DeleteView ,ListView , View , FormView
+from django.views.generic import  CreateView , DetailView , DeleteView ,TemplateView , View , FormView
 from django.views.generic.edit import UpdateView , DeleteView
 from .models import Post
 from .forms import PostForm , PostUpdateForm , CommentForm , SearchForm
@@ -188,3 +188,6 @@ class SearchPostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek k
         except:
             return Response({'status' : "Iternal Server Error "} , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
+
+class AboutUsPageView(TemplateView):
+    template_name = 'aboutus.html'
