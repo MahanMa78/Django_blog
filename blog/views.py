@@ -201,3 +201,16 @@ def about_us(request):
         'text' : text,
     }
     return render(request, 'aboutus.html', context)
+
+def contact_us(request):
+    contact_info = """
+        our connecting links
+"""
+    email = 'mahan@blog.com'
+
+    context ={
+        'contact_info' : contact_info,
+        'email' : email,
+    }
+
+    return render(request , 'contactus.html' , context)
