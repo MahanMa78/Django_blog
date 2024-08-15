@@ -1,5 +1,20 @@
 {% extends "_base.html" %}
 
 {% block content %}
-    <h1>Hello</h1>
+    <h1>About Us</h1>
+    <p>{{ text }}</p>
+
+    <h2>Our Admins</h2>
+        <ul class="admin-list">
+            {% for admin in admin_users %}
+                <div class="col-md-4 text-center">
+                    <img src="{{ admin.photo.url }}" class="img-fluid rounded-circle mb-3" alt="Profile Picture">
+                </div>
+                <h4>{{ admin.username }}</h4>
+                <p><strong>Full Name:</strong> {{ admin.first_name }} {{ admin.last_name }}</p>
+                <p><strong>About:</strong> {{ admin.about }}</p>
+            {% empty %}
+                <li>No admin users found.</li>
+            {% endfor %}
+        </ul>
 {% endblock content %}

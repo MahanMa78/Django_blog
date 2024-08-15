@@ -11,6 +11,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from . import serializers
+from django.conf import settings
+from accounts.models import CustomUser
 
 class HomeView(View): #bayad az ListView be View taghir bedim
     # model = Post
@@ -189,5 +191,13 @@ class SearchPostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek k
             return Response({'status' : "Iternal Server Error "} , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
-class AboutUsPageView(TemplateView):
-    template_name = 'aboutus.html'
+def about_us(request):
+    admin_users = CustomUser.objects.filter(is_superuser=True)
+    text = """
+        Welcome to our website. Here is some information about us and our admin team:
+    """
+    context = {
+        'admin_users': admin_users,
+        'text' : text,
+    }
+    return render(request, 'aboutus.html', context)
