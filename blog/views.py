@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse
 from django.views.generic import  CreateView , DetailView , DeleteView ,TemplateView , View , FormView
 from django.views.generic.edit import UpdateView , DeleteView
-from .models import Post
+from .models import Post , AboutContactUs
 from .forms import PostForm , PostUpdateForm , CommentForm , SearchForm
 from django.urls import reverse_lazy , reverse
 from django.core.paginator import Paginator
@@ -191,26 +191,54 @@ class SearchPostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek k
             return Response({'status' : "Iternal Server Error "} , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 
-def about_us(request):
-    admin_users = CustomUser.objects.filter(is_superuser=True)
-    text = """
-        Welcome to our website. Here is some information about us and our admin team:
-    """
-    context = {
-        'admin_users': admin_users,
-        'text' : text,
-    }
-    return render(request, 'aboutus.html', context)
+# def about_us(request):
+#     admin_users = CustomUser.objects.filter(is_superuser=True)
+#     text = """
+#         Welcome to our website. Here is some information about us and our admin team:
+#     """
+#     context = {
+#         'admin_users': admin_users,
+#         'text' : text,
+#     }
+#     return render(request, 'aboutus.html', context)
 
-def contact_us(request):
-    contact_info = """
-        our connecting links
-"""
-    email = 'mahan@blog.com'
 
-    context ={
-        'contact_info' : contact_info,
-        'email' : email,
-    }
+class AboutUsView(TemplateView):
+    # model = AboutContactUs
+    template_name = 'aboutus.html'
+    # context_object_name = 'about_us'
+    
 
-    return render(request , 'contactus.html' , context)
+    def get(self, request):
+        admin_users = CustomUser.objects.filter(is_superuser=True)
+        aboutus = AboutContactUs.objects.first()
+        context = {
+            'admin_users' : admin_users,
+            'about_us' : aboutus,
+        }
+        return render(request , self.template_name , context)
+    
+
+
+# def contact_us(request):
+#     contact_info = """
+#         our connecting links
+# """
+#     email = 'mahan@blog.com'
+
+#     context ={
+#         'contact_info' : contact_info,
+#         'email' : email,
+#     }
+
+#     return render(request , 'contactus.html' , context)
+
+class ContactUs(TemplateView):
+    template_name = 'contactus.html'
+    
+    def get(self, request):
+        contactus = AboutContactUs.objects.first()
+        context = {
+            'contact_us' : contactus,
+        }
+        return render(request , self.template_name , context)

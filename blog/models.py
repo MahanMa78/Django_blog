@@ -45,3 +45,12 @@ class Comment(models.Model):
     def __str__(self):
         return self.body
     
+class AboutContactUs(models.Model):
+    about_us = RichTextField()
+    contact_us = RichTextField()
+    email = models.EmailField(null=False,blank=False)
+    phone_number = models.IntegerField(null = False ,blank=False)
+
+    def __str__(self):
+        return self.email
+    

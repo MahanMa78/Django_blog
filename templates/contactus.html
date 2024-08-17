@@ -4,7 +4,16 @@
     <h1>Contact Us</h1>
     <h2>Hello Dears</h2>
         <ul class="admin-list">
-            <h4>{{ contact_info }}</h4>            
-            <li>{{ email }}</li>
+            {% comment %} <h4>{{ contact_info }}</h4>             {% endcomment %}
+            {% comment %} <li>{{ email }}</li> {% endcomment %}
         </ul>
+
+    <h2>Contact Us</h2>
+    <div>
+        {{ contact_us.contact_us|safe }}  <!-- نمایش متن با حفظ فرمت HTML -->
+    </div>
+    <h3>Email</h3>
+    <div>
+       <h1> {{ contact_us.email }} </h1>
+    </div>
 {% endblock content %}
