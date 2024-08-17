@@ -21,7 +21,7 @@ class HomeView(View): #bayad az ListView be View taghir bedim
     paginate_by = 1 #manzor tedad post hay ke dakhel yek safhe mishe did
 
     def get(self, request):
-        posts = Post.objects.filter(active= True)
+        posts = Post.objects.filter(active= True).order_by('-date')
         paginator = Paginator(posts,self.paginate_by) #tamam safahat dakhelsh hast va har safhe ham tedadi post dakhelesh dare
 
         page_number = request.GET.get('page') #pagi ke karbar mikhad estekhraj beshe
