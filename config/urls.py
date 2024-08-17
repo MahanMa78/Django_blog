@@ -19,6 +19,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path , include
 
+admin.site.site_header = 'Blog' #miad va esme Django Adminstration ro taghir mide
+admin.site.index_title = 'Special Access' #miad va esme Site administration ro taghir mide
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('' , include('blog.urls')),

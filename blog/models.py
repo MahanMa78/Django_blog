@@ -29,6 +29,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("post_detail", kwargs={"pk": self.pk})
     
+    def comments_count(self):
+        return self.comment_set.count()
+    
 
 class ActiveCommentManger(models.Manager):
     def get_queryset(self):
