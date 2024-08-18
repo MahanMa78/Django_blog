@@ -4,7 +4,9 @@ from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from .models import Post , Comment , Category , AboutContactUs
 from django.db.models import Count
-
+from django.utils.html import format_html
+from django.urls import reverse
+from django.utils.http import urlencode
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -14,6 +16,12 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Category , CategoryAdmin)
 
+class CommentInLine(admin.StackedInline):
+    model = Comment
+    fields = ['author' , 'body' , 'date' , 'active']
+    extra = 0
+
+
 class PostAdmin(admin.ModelAdmin):
     list_display = ['id' , 'title' , 'author'  , 'category' , 'date' , 'active' ,'comments_count']
     list_per_page = 5 #mige dar har safhe az pannel admin chanta neshon bede
@@ -21,7 +29,8 @@ class PostAdmin(admin.ModelAdmin):
     list_select_related = ['category'] #baraye behine kardan queryset ha
     list_filter = ['date' , 'category' ,] #filter haye kenar pannel admin bar asas in ha hastan
     search_fields = ['title' , 'author__username' ,] #be vasile inha miad va search mikone
-    list_display_links =['id','title','author']
+    list_display_links =['id','title',]
+    inlines = [CommentInLine]
 
     def get_queryset(self, request):
         return super().get_queryset(request)\
@@ -32,7 +41,15 @@ class PostAdmin(admin.ModelAdmin):
 
     @admin.display(description='# commetns' , ordering='comments_count')
     def comments_count(self , post :Post):
-        return post.comments_count
+        url = (
+            reverse('admin:blog_comment_changelist') 
+            + '?'
+            + urlencode({
+                'post__id': post.id, #in url dar kol moadel 'admin/blog/comment/?post__id' hast
+            })
+        )
+        return format_html('<a href="{}">{}</a>',url,post.comments_count) #ma ba in kar be onjae ke mikhahim link mishim
+        # return post.comments_count
 #baraye zamani ke ma yek field dakhel model aslimon nadarim vali mikhahim on ro namayesh bedim on ro minevism va baadesh tarifesh mikonim(be sorat yek function) 
 admin.site.register(Post , PostAdmin)
 
@@ -41,6 +58,7 @@ class CommentAdmin(admin.ModelAdmin):
     list_editable = ['active']
     list_per_page = 10
     list_filter = ['date']
+    autocomplete_fields =['post',] #baraye inke in filed dorost tarif beshe bayad searchfield dar dakhel PostAdmin tarif beshe
 admin.site.register(Comment , CommentAdmin)
 
 admin.site.register(AboutContactUs)
