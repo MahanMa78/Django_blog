@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from .models import Post , Comment , Category , AboutContactUs
-from django.db.models import Count
+from django.db.models import Count , Q
 from django.utils.html import format_html
 from django.urls import reverse
 from django.utils.http import urlencode
@@ -34,11 +34,13 @@ class PostAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         return super().get_queryset(request)\
-            .prefetch_related('comment')\
+            .prefetch_related('comment_set')\
             .annotate(
-                comments_count = Count('comment'),
+                comments_count = Count('comment' , filter=Q(comment__active=True)) ,
             )
-
+            #dar in code , prefetch_related('comment_set') , man chon related_name ro nadam be model Comment pas Django be tor pish farz az comment_set estefade mikone
+            #edame: dar kol bedon related_name esme pishfarz ro momkene be sorat esmeclass_set dar nazar begire , baraye motevajeh shodanesh 
+    
     @admin.display(description='# commetns' , ordering='comments_count')
     def comments_count(self , post :Post):
         url = (
@@ -49,9 +51,12 @@ class PostAdmin(admin.ModelAdmin):
             })
         )
         return format_html('<a href="{}">{}</a>',url,post.comments_count) #ma ba in kar be onjae ke mikhahim link mishim
-        # return post.comments_count
 #baraye zamani ke ma yek field dakhel model aslimon nadarim vali mikhahim on ro namayesh bedim on ro minevism va baadesh tarifesh mikonim(be sorat yek function) 
 admin.site.register(Post , PostAdmin)
+
+#
+
+
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ['id' , 'author' , 'date' , 'active' , 'post']

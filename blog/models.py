@@ -48,7 +48,7 @@ class ActiveCommentManger(models.Manager):
     
 class Comment(models.Model):
     author = models.ForeignKey('accounts.CustomUser' , on_delete=models.CASCADE ,related_name='comments')
-    post = models.ForeignKey(Post , on_delete= models.CASCADE , related_name='comment')
+    post = models.ForeignKey(Post , on_delete= models.CASCADE )
     body = models.TextField(null=False , blank=False)
     date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
