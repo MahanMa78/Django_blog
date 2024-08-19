@@ -2,11 +2,14 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <div class="container">
     <div class="col-6">
         <h1>Sign Up Form</h1>
         <form method="post">
             {% csrf_token %}
+            {{ form.media }}
             {{ form|crispy }}
         <button type="submit" class="btn btn-success">Sign Up</button>
         </form>

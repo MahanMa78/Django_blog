@@ -21,7 +21,7 @@
                             <p><strong>Email:</strong> {{ user.email }}</p>
                             <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
                             <p><strong>About:</strong> {{ user.about }}</p>
-                            <p><strong>Age:</strong> {{ user.age }}</p>
+                            <p><strong>Birthdate:</strong> {{ user.birth_date }}</p>
                             <p><strong>Date Joined:</strong> {{ user.date_joined|date:"F j, Y" }}</p>
                             <p><strong>Description:</strong> {{ user.description|safe }}</p>
                             <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>

@@ -6,7 +6,7 @@ from ckeditor.fields import RichTextField
 #ama az inja be baad ma user ro shakhsi saz tar kardim
 
 class CustomUser(AbstractUser):
-    age = models.PositiveIntegerField(null = True , blank=True)
+    birth_date = models.DateField(null = True , blank=True)
     photo = models.ImageField(upload_to='photo/profile/%Y/%m/%d/' , default='null')
     about = models.CharField(max_length=255 , default='null') 
     #default='null' --> komak mikone ke data haye ghabli dakhel database zamani ke vojod daran dochar moshkel nashan

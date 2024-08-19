@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'taggit',
     'rest_framework',
     'ckeditor',
+    'bootstrap_datepicker_plus',
 
     #Local
     'blog',

@@ -15,7 +15,7 @@ class ProfileView(TemplateView):
 
 class ProfileUpdateView(UpdateView):
     model = CustomUser
-    fields = ['first_name' , 'last_name' , 'email' , 'photo' ,'age' , 'about' , 'description']
+    fields = ['first_name' , 'last_name' , 'email' , 'photo' ,'birth_date' , 'about' , 'description']
     template_name = 'profile_edit.html'
     success_url = reverse_lazy('profile')
 
