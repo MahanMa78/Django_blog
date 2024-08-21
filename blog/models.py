@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from datetime import date
 from django.urls import reverse
@@ -54,8 +55,10 @@ class Comment(models.Model):
     active = models.BooleanField(default=True)
     active_comments_manager = ActiveCommentManger()
 
+    objects = models.Manager() 
+
     def __str__(self):
-        return self.body
+        return f'{self.author.username} : {self.body[:30]}'
     
 class AboutContactUs(models.Model):
     about_us = RichTextField()
@@ -66,3 +69,16 @@ class AboutContactUs(models.Model):
     def __str__(self):
         return self.email
     
+
+class Reply(models.Model):
+    author = models.ForeignKey('accounts.CustomUser' , on_delete=models.SET_NULL , null=True , related_name='replies')
+    parent_comment = models.ForeignKey(Comment , on_delete=models.CASCADE , related_name='replies')
+    body = models.CharField(max_length=512)
+    created = models.DateField(auto_now_add=True)
+    id = models.CharField(max_length=100 , default=uuid.uuid4 , unique= True , primary_key= True , editable=False)
+
+    def __str__(self):
+        return f'{self.author.username} : {self.body[:30]}'
+    
+    class Meta:
+        ordering = ['created']

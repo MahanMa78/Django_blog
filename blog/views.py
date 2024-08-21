@@ -1,11 +1,11 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
 from django.views.generic import  CreateView , DetailView , DeleteView ,TemplateView , View , FormView
 from django.views.generic.edit import UpdateView , DeleteView
-from .models import Post , AboutContactUs
-from .forms import PostForm , PostUpdateForm , CommentForm , SearchForm
+from .models import Post , AboutContactUs , Comment , Reply
+from .forms import PostForm , PostUpdateForm , CommentForm , SearchForm , ReplyCreateForm
 from django.urls import reverse_lazy , reverse
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.views.generic.detail import SingleObjectMixin #be vasile in mohtavaye ke behesh atach shode be yek url ro estekhraj mikonim
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -57,9 +57,33 @@ class CommentGet(DetailView):
 
     def get_context_data(self , **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = CommentForm()
+        context['comment_form'] = CommentForm() 
+        context['reply_form'] = ReplyCreateForm() 
         return context
 
+
+class ReplyPost(SingleObjectMixin , FormView):
+    model = Comment
+    form_class = ReplyCreateForm
+    template_name = 'post_detail.html'
+
+    def post(self , request , *args , **kwargs):
+        self.object = self.get_object()
+        return super().post(request , *args , **kwargs)
+    
+    def form_valid(self, form):
+        reply = form.save(commit = False)
+        parent_comment_id = self.request.POST.get("parent_comment_id")
+        parent_comment = Comment.objects.get(id=parent_comment_id)
+        reply.parent_comment = parent_comment
+        reply.author = self.request.user
+        reply.save()
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        post = self.object.post
+        return reverse('post_detail' , kwargs={'pk' : post.pk})
+    
 
 # ma ham be SingleObjectMixin niaz darim va ham be FormView ta Form ro ersal konim
 class CommentPost(SingleObjectMixin , FormView):
@@ -74,7 +98,7 @@ class CommentPost(SingleObjectMixin , FormView):
     def form_valid(self ,form ): #miad form ro ke az samte karbar miad ro check mikone
         comment = form.save(commit = False) #manzor az commit = False inke felan dakhel database zakhire nmishe
         comment.post = self.object
-        comment.author = self.request.user
+        comment.author = self.request.user        
         comment.save()
         return super().form_valid(form)
     
@@ -89,7 +113,10 @@ class PostDetailView(View):
         return view(request , *args , **kwargs)
     
     def post(self, request , *args , **kwargs):
-        view = CommentPost.as_view()
+        if 'parent_comment_id' in request.POST:
+            view = ReplyPost.as_view()
+        else:
+            view = CommentPost.as_view()
         return view(request , *args , **kwargs)
 
 

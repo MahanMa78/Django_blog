@@ -100,23 +100,46 @@
                     <div class="d-flex">
                       <div class="comment-img"><img src="{{comment.author.photo.url}}" alt=""></div>
                       <div>
-                        <h5>{{ comment.author.username }}</h5>
+                        <h5>{{ comment.author.username }} <a href="#" class="reply"><i class="bi bi-reply-fill"></i> Reply</a></h5>
+                        {% if comment.replies.count %}
+                          Replies
+                          <span class="font-light text-gray-500 ml-1">({{ comment.replies.count }})</span>
+                        {% else %}
+                          {% if user.is_authenticated %}Add Reply{% endif %}
+                        {% endif %}
                         <time datetime="">{{ comment.date }}</time>
                         <p>
                           {{ comment.body}}
                         </p>
                       </div>
+
+                      {% for reply in comment.replies.all %}
+                        <div id="reply-{{ reply.id }}" class="reply">
+                            {% comment %} <p><strong>{{ reply.author.username }}:</strong> {{ reply.body }}</p> {% endcomment %}
+                            {% include "reply.html" %}
+                        </div>
+                      {% endfor %}
+
+                      {% if user.is_authenticated %}
+                      <form  method="post" class="replyform flex justify-between" >
+                        {% csrf_token %}
+                        <input type="hidden" name="parent_comment_id" value="{{ comment.id }}">
+                        {{ reply_form|crispy }}
+                        <button type="submit" class="block">Reply</button>
+                      </form>
+                      {% endif %} 
+
                     </div>
                   </div><!-- End comment #1 -->     
                 {% endfor %}
 
                 {% if user.is_authenticated %}
                 <div class="reply-form">
-                  <h4>{{ user.username }} Leave a Reply</h4>
+                  <h4>{{ user.username }} Leave a Commnet </h4>
                   <p>Your email address will not be published. Required fields are marked * </p>
                   <form method="post" >
                     {% csrf_token %}
-                    {{ form|crispy}}
+                    {{ comment_form|crispy}}
                     <button type="submit" class="btn btn-primary">Post Comment</button>
   
                   </form>
@@ -124,7 +147,6 @@
                 </div>
                 {% endif %} 
               </div><!-- End blog comments -->
-  
             </div><!-- End blog entries list -->
   
             <div class="col-lg-4">

@@ -1,0 +1,33 @@
+{% load static %}
+<reply class="flex items-end justify-between py-4 border-t">
+    <div class="flex">
+        {% if reply.author %}
+        {% comment %} <a href="{% url 'userprofile' reply.author.username %}"> {% endcomment %}
+            {% comment %} <img class="w-8 h-8 object-cover rounded-full mr-2" src="{{ reply.author.photo.url }}"> {% endcomment %}
+            <div class="comment-img"><img src="{{reply.author.photo.url}}" alt=""></div>
+        </a>
+        {% else %}
+        <img class="w-8 h-8 object-cover rounded-full" src="{% static 'images/avatar_default.svg' %}">
+        {% endif %}
+        <div class="w-fit">
+            {% if reply.author %}
+            <a class="block" href="">
+                <span class="font-bold hover:underline">@{{ reply.author.username }}</span>
+                {% comment %} {% if user.first_name and user.last_name %}
+                <span class="text-sm text-gray-400">{{ reply.author.first_name }} {{ reply.author.last_name }}</span>
+                {% endif %} {% endcomment %}
+            </a>
+            <time datetime="">{{ reply.created }}</time>
+            {% else %}
+            <span class="text-gray-500">no author</span>
+            {% endif %}
+            <div class="mr-3">{{ reply.body }}</div>
+        </div>
+    </div>
+    <div class="flex items-center gap-4 [&>a:hover]:underline">
+        {% comment %} {% include 'snippets/likes_reply.html' %} {% endcomment %}
+        {% if user.is_authenticated and reply.author == user %}
+        {% comment %} <a href="{% url 'reply-delete' reply.id %}">Delete</a> {% endcomment %}
+        {% endif %}
+    </div>
+</reply> 

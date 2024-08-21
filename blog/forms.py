@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post , Comment
+from .models import Post , Comment, Reply
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -21,3 +21,15 @@ class CommentForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField(label='Search', max_length=100)
+
+class ReplyCreateForm(forms.ModelForm):
+    class Meta:
+        model = Reply
+        fields = ['body']
+        widget = {
+            'body' : forms.TextInput(attrs={'placeholder' : 'Add reply ...' , 'class' :"!text-sm"}),
+            'comment_id': forms.HiddenInput(),
+        }
+        labels = {
+            'body' : ''
+        }
