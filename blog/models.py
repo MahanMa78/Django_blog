@@ -65,6 +65,7 @@ class AboutContactUs(models.Model):
     contact_us = RichTextField()
     email = models.EmailField(null=False,blank=False)
     phone_number = models.IntegerField(null = False ,blank=False)
+    location = models.TextField(default="None")
 
     def __str__(self):
         return self.email

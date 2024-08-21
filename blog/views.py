@@ -18,7 +18,7 @@ class HomeView(View): #bayad az ListView be View taghir bedim
     # model = Post
     template_name = 'home.html'
     context_object_name = 'post_list'
-    paginate_by = 1 #manzor tedad post hay ke dakhel yek safhe mishe did
+    paginate_by = 3 #manzor tedad post hay ke dakhel yek safhe mishe did
 
     def get(self, request):
         posts = Post.objects.filter(active= True).order_by('-date')
