@@ -90,6 +90,7 @@ TEMPLATES = [
                 'blog.context_processors.count_categories_posts',
                 'blog.context_processors.posts_by_tag',
                 'blog.context_processors.search_form',
+                'blog.context_processors.contact_about_us',
             ],
         },
     },

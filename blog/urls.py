@@ -10,7 +10,7 @@ from .views import (
     SinglePostAPIView,
     SearchPostAPIView,
     AboutUsView,
-    ContactUs,
+    ContactUsView,
     TermsOfServicesView,
     PrivacyPolicyView,
 )
@@ -26,7 +26,7 @@ urlpatterns = [
     path('post/' , SinglePostAPIView.as_view() , name='single_post'),
     path('post/search/' , SearchPostAPIView.as_view() , name='search_post'),
     path('aboutus/', AboutUsView.as_view() ,name='aboutus'),
-    path('contactus/', ContactUs.as_view() ,name='contactus'),
+    path('contactus/', ContactUsView.as_view() ,name='contactus'),
     path('terms/' , TermsOfServicesView.as_view() , name='terms'),
     path('policy/' , PrivacyPolicyView.as_view() , name='policy'),
     

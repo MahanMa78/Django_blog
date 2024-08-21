@@ -260,7 +260,7 @@ class AboutUsView(TemplateView):
 
 #     return render(request , 'contactus.html' , context)
 
-class ContactUs(TemplateView):
+class ContactUsView(TemplateView):
     template_name = 'contactus.html'
     
     def get(self, request):

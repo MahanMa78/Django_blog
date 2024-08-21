@@ -1,4 +1,4 @@
-from .models import Post , Category
+from .models import Post , Category , AboutContactUs
 from django.db.models import Count
 from taggit.models import Tag
 from .forms import SearchForm
@@ -26,3 +26,7 @@ def posts_by_tag(request):
 
 def search_form(request):
     return {'search_form': SearchForm()}
+
+def contact_about_us(request):
+    contactus = AboutContactUs.objects.first()
+    return {'contact_us' : contactus}
