@@ -2,7 +2,7 @@ from typing import Any
 from django.contrib import admin
 from django.db.models.query import QuerySet
 from django.http import HttpRequest
-from .models import Post , Comment , Category , AboutContactUs , Reply
+from .models import Post , Comment , Category , AboutContactUs , Reply , TermsOfServices , PrivacyPolicy
 from django.db.models import Count , Q
 from django.utils.html import format_html
 from django.urls import reverse
@@ -68,3 +68,5 @@ admin.site.register(Comment , CommentAdmin)
 
 admin.site.register(AboutContactUs)
 admin.site.register(Reply)
+admin.site.register(TermsOfServices)
+admin.site.register(PrivacyPolicy)

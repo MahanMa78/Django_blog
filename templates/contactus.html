@@ -12,8 +12,12 @@
     <div>
         {{ contact_us.contact_us|safe }}  <!-- نمایش متن با حفظ فرمت HTML -->
     </div>
-    <h3>Email</h3>
+    <h3>Email: </h3>
     <div>
        <h1> {{ contact_us.email }} </h1>
+    </div>
+    <h3>Phone Number: </h3>
+    <div>
+       <h1> {{ contact_us.phone_number }} </h1>
     </div>
 {% endblock content %}

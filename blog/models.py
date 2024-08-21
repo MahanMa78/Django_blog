@@ -83,3 +83,16 @@ class Reply(models.Model):
     
     class Meta:
         ordering = ['created']
+        
+class TermsOfServices(models.Model):
+    terms = models.TextField()
+    
+    def __str__(self):
+        return f"{self.terms[:30]}"
+    
+class PrivacyPolicy(models.Model):
+    privacy = models.TextField()
+    
+    def __str__(self):
+        return f"{self.privacy[:30]}"
+    

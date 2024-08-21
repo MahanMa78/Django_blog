@@ -1,7 +1,7 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
 from django.views.generic import  CreateView , DetailView , DeleteView ,TemplateView , View , FormView
 from django.views.generic.edit import UpdateView , DeleteView
-from .models import Post , AboutContactUs , Comment , Reply
+from .models import Post , AboutContactUs , Comment , Reply, TermsOfServices , PrivacyPolicy
 from .forms import PostForm , PostUpdateForm , CommentForm , SearchForm , ReplyCreateForm
 from django.urls import reverse_lazy , reverse
 from django.core.paginator import Paginator
@@ -267,5 +267,25 @@ class ContactUs(TemplateView):
         contactus = AboutContactUs.objects.first()
         context = {
             'contact_us' : contactus,
+        }
+        return render(request , self.template_name , context)
+    
+class TermsOfServicesView(TemplateView):
+    template_name = 'terms.html'
+    
+    def get(self , request):
+        terms = TermsOfServices.objects.first()
+        context = {
+            'terms' : terms,
+        }
+        return render(request , self.template_name , context)
+    
+class PrivacyPolicyView(TemplateView):
+    template_name = 'policy.html'
+    
+    def get(self , request):
+        privacy = PrivacyPolicy.objects.first()
+        context = {
+            'privacy' : privacy,
         }
         return render(request , self.template_name , context)

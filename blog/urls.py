@@ -11,6 +11,8 @@ from .views import (
     SearchPostAPIView,
     AboutUsView,
     ContactUs,
+    TermsOfServicesView,
+    PrivacyPolicyView,
 )
 
 urlpatterns = [
@@ -25,5 +27,7 @@ urlpatterns = [
     path('post/search/' , SearchPostAPIView.as_view() , name='search_post'),
     path('aboutus/', AboutUsView.as_view() ,name='aboutus'),
     path('contactus/', ContactUs.as_view() ,name='contactus'),
+    path('terms/' , TermsOfServicesView.as_view() , name='terms'),
+    path('policy/' , PrivacyPolicyView.as_view() , name='policy'),
     
 ]
