@@ -1,11 +1,11 @@
 from django.http import HttpRequest, HttpResponse, HttpResponseBadRequest
 from django.views.generic import  CreateView , DetailView , DeleteView ,TemplateView , View , FormView
 from django.views.generic.edit import UpdateView , DeleteView
-from .models import Post , AboutContactUs , Comment , Reply, TermsOfServices , PrivacyPolicy
+from .models import Category, Post , AboutContactUs , Comment , Reply, TermsOfServices , PrivacyPolicy
 from .forms import PostForm , PostUpdateForm , CommentForm , SearchForm , ReplyCreateForm
 from django.urls import reverse_lazy , reverse
 from django.core.paginator import Paginator
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.detail import SingleObjectMixin #be vasile in mohtavaye ke behesh atach shode be yek url ro estekhraj mikonim
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -33,6 +33,17 @@ class HomeView(View): #bayad az ListView be View taghir bedim
 
         return render(request , self.template_name , context) #manzor inke boro to template ke man mikham va be hamrah mohtavie ke man behet midam
     
+
+
+class CategoryView(View):
+    context_object_name = 'categories'
+    def get(self , request):
+        categories = Category.objects.all()        
+        context = {
+        'categories' : categories,
+        }
+        
+        return render(request, 'category.html' , context)
 
 
 class PostNewView(CreateView):

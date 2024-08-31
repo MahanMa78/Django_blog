@@ -1,0 +1,61 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Category{% endblock title %}
+
+{% block content %}
+
+     <!-- ======= Blog Section ======= -->
+     <section class="breadcrumbs">
+        <div class="container">
+
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>Category</h2>
+            <ol>
+              <li><a href="{% url "home" %}">home</a></li>
+            </ol>
+          </div>
+
+        </div>
+      </section><!-- End Blog Section -->
+
+      <!-- ======= Blog Section ======= -->
+      <section id="blog" class="blog">
+        <div class="container" data-aos="fade-up">
+
+          <div class="row">
+
+            <div class="col-lg-8 entries">
+              {% if categories %}
+                {% for category in categories %}
+                  <article class="entry">
+      
+                    <div class="entry-img">
+                      <img src="{{ category.photo.url }}" alt="" class="img-fluid">
+                    </div>
+      
+                    <h2 class="entry-title">
+                      <a href="">{{ category.title }}</a>
+                    </h2>
+                  </article><!-- End blog entry -->            
+              {% endfor %}
+             
+              {% else %}
+              <h2>No Category Available</h2>
+              {% endif %}
+            </div><!-- End blog entries list -->
+
+            <div class="col-lg-4">
+
+              {% block sidebar %}
+                {% include "sidebar.html" %}
+              {% endblock sidebar %}
+
+            </div><!-- End blog sidebar -->
+
+          </div>
+
+        </div>
+      </section><!-- End Blog Section -->
+
+{% endblock content %}

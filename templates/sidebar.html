@@ -10,7 +10,9 @@
       </form>
     </div><!-- End sidebar search formn-->
 
-    <h3 class="sidebar-title">Categories</h3>
+    <a href="{% url "category" %}">
+      <h3 class="sidebar-title">Categories</h3>
+    </a>
     <div class="sidebar-item categories">
       <ul>
         {% comment %} {% if categories_posts %}

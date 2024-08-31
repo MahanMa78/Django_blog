@@ -13,6 +13,7 @@ from .views import (
     ContactUsView,
     TermsOfServicesView,
     PrivacyPolicyView,
+    CategoryView,
 )
 
 urlpatterns = [
@@ -29,5 +30,5 @@ urlpatterns = [
     path('contactus/', ContactUsView.as_view() ,name='contactus'),
     path('terms/' , TermsOfServicesView.as_view() , name='terms'),
     path('policy/' , PrivacyPolicyView.as_view() , name='policy'),
-    
+    path('category/' , CategoryView.as_view() , name='category')
 ]
