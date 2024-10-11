@@ -35,7 +35,7 @@ class HomeView(View): #bayad az ListView be View taghir bedim
     
 
 
-class CategoryView(View):
+class CategoryListView(View):
     context_object_name = 'categories'
     def get(self , request):
         categories = Category.objects.all()        
@@ -43,8 +43,11 @@ class CategoryView(View):
         'categories' : categories,
         }
         
-        return render(request, 'category.html' , context)
+        return render(request, 'category_list.html' , context)
 
+
+class CategoryDetailView(View):
+    pass
 
 class PostNewView(CreateView):
     model = Post
