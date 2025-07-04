@@ -13,6 +13,7 @@ Markdown==3.6
 pillow==10.4.0
 pydantic==2.8.2
 pydantic_core==2.20.1
+python-dotenv==1.1.1
 sqlparse==0.5.1
 typing_extensions==4.12.2
 tzdata==2024.1
