@@ -60,6 +60,10 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.author.username} : {self.body[:30]}'
     
+    # def get_absolute_url(self):
+    #     return reverse("post_detail", kwargs={"pk": self.pk})
+    
+    
 class AboutContactUs(models.Model):
     about_us = RichTextField()
     contact_us = RichTextField()
