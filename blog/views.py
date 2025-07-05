@@ -13,7 +13,7 @@ from rest_framework import status
 from . import serializers
 from django.conf import settings
 from accounts.models import CustomUser
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 
 class HomeView(View): #bayad az ListView be View taghir bedim
     # model = Post
@@ -134,17 +134,24 @@ class PostDetailView(LoginRequiredMixin,View):
             view = CommentPost.as_view()
         return view(request , *args , **kwargs)
 
-
-class PostUpdateView(LoginRequiredMixin,UpdateView):
+class PostUpdateView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model = Post
     template_name = 'post_update.html'
     form_class = PostUpdateForm
     # fileds = ['title' , 'excerpt' , 'body' , 'photo']
+    
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user  # check if the user is the author of the
 
-class PostDeleteView(LoginRequiredMixin,DeleteView):
+class PostDeleteView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('home')
+    
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
 
 def search_view(request):
     form = SearchForm()
