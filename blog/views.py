@@ -13,6 +13,7 @@ from rest_framework import status
 from . import serializers
 from django.conf import settings
 from accounts.models import CustomUser
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class HomeView(View): #bayad az ListView be View taghir bedim
     # model = Post
@@ -49,7 +50,7 @@ class CategoryListView(View):
 class CategoryDetailView(View):
     pass
 
-class PostNewView(CreateView):
+class PostNewView(LoginRequiredMixin,CreateView):
     model = Post
     form_class = PostForm #mishe jash nevesht --> fields = ['title' , 'excerpt' , 'body' , 'autthor' , 'date' , 'photo']
     success_url = reverse_lazy('home')
@@ -121,7 +122,7 @@ class CommentPost(SingleObjectMixin , FormView):
         return reverse('post_detail' , kwargs={'pk' : post.pk})
 
 
-class PostDetailView(View):
+class PostDetailView(LoginRequiredMixin,View):
     def get(self, request , *args , **kwargs):
         view = CommentGet.as_view()
         return view(request , *args , **kwargs)
@@ -134,13 +135,13 @@ class PostDetailView(View):
         return view(request , *args , **kwargs)
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin,UpdateView):
     model = Post
     template_name = 'post_update.html'
     form_class = PostUpdateForm
     # fileds = ['title' , 'excerpt' , 'body' , 'photo']
 
-class PostDeleteView(DeleteView):
+class PostDeleteView(LoginRequiredMixin,DeleteView):
     model = Post
     template_name = 'post_delete.html'
     success_url = reverse_lazy('home')
