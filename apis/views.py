@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status , generics
 from . import serializers
 from blog.models import Post
+from rest_framework.decorators import api_view
 
 class AllPostsAPIView(APIView):
 # baraye search kardanesh bayad benevisim : http://localhost:8000/post/all/
@@ -78,3 +79,16 @@ class SearchPostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek k
 
         except:
             return Response({'status' : "Iternal Server Error "} , status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
+        
+# class PostAPIView(generics.ListAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = serializers.PostSerializer
+
+# @api_view(['GET'])
+# def post_detail(request , title):
+#     try:
+#         post = Post.objects.get(title = title)
+#     except Post.DoesNotExist:
+#         return Response({"error" : "Post does not exist"})
