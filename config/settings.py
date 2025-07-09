@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'taggit',
     'rest_framework',
     'ckeditor',
+    'django_ckeditor_5',
     'bootstrap_datepicker_plus',
 
     #Local
