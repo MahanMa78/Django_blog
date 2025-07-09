@@ -10,7 +10,7 @@ from django.views.generic.detail import SingleObjectMixin #be vasile in mohtavay
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from ..apis import serializers
+# from .apis import serializers
 from django.conf import settings
 from accounts.models import CustomUser
 from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
