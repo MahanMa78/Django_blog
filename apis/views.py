@@ -13,6 +13,7 @@ class AllPostsAPIView(APIView):
             data = []
             for post in all_posts:
                 data.append({
+                    'id': post.id,
                     'title' : post.title,
                     'excerpt' : post.excerpt,
                     'body' : post.body ,
