@@ -82,9 +82,9 @@ class SearchPostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek k
         
         
         
-# class PostAPIView(generics.ListAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = serializers.PostSerializer
+class PostAPIView(generics.ListAPIView):
+    queryset = Post.objects.all()
+    serializer_class = serializers.PostSerializer
 
 # @api_view(['GET'])
 # def post_detail(request , title):
