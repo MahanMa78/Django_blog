@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     #Local
     'blog',
     'accounts',
+    "apis",
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
