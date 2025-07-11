@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'django_ckeditor_5',
     'bootstrap_datepicker_plus',
+    "corsheaders",
 
     #Local
     'blog',
@@ -63,12 +64,20 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = (
+ "http://localhost:3000",
+ "http://localhost:8000",
+ )
+
+CSRF_TRUSTED_ORIGINS = ["https://localhost:3000"] #in gesmat baraye hamhangi beyn backend va frontend neveshte shode ast
 
 ROOT_URLCONF = 'config.urls'
 
