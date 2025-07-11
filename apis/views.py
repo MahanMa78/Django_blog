@@ -32,8 +32,13 @@ class AllPostsAPIView(APIView):
         except:
             return Response({'status' : "Internal Server Error  , We'll Check It Latter"},
                             status = status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
-  
+
+"""
+TODO class ListAPIView(generics.ListAPIView):
+TODO    queryset = Post.objects.all()
+TODO    serializer_class = serializers.PostSerializer        
+?---> yek rah dige baraye neveshtan apiview baraye hamaye post ha
+"""
 
 class SinglePostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek maghale ro search konim
  # baraye search kardanesh bayad benevisim : http://localhost:8000/post/?post_title=
@@ -82,7 +87,7 @@ class SearchPostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek k
         
         
         
-class PostAPIView(generics.ListAPIView):
+class PostAPIView(generics.RetrieveAPIView):
     queryset = Post.objects.all()
     serializer_class = serializers.PostSerializer
 
