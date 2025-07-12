@@ -6,8 +6,11 @@ from . import serializers
 from blog.models import Post
 from rest_framework.decorators import api_view
 
+from .permissions import IsAuthorOrReadOnly
+
 class AllPostsAPIView(APIView):
 # baraye search kardanesh bayad benevisim : http://localhost:8000/post/all/
+    permission_classes = (IsAuthorOrReadOnly,)
     def get(self , request ,format = None):
         try:
             all_posts = Post.objects.filter(active = True).order_by('-date')[:10]
@@ -40,12 +43,14 @@ TODO    serializer_class = serializers.PostSerializer
 ?---> yek rah dige baraye neveshtan apiview baraye hamaye post ha
 """
 class ListAPIView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthorOrReadOnly,)
     queryset = Post.objects.all()
     serializer_class = serializers.PostSerializer
 
 
 class SinglePostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek maghale ro search konim
  # baraye search kardanesh bayad benevisim : http://localhost:8000/post/?post_title=
+    permission_classes = (IsAuthorOrReadOnly,)
     def get(self , request , format = None ):
         try:
             post_title = request.GET['post_title']
@@ -60,7 +65,7 @@ class SinglePostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek m
 # Create your views here.
 class SearchPostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek kalame ya matn ro dakhele post ha search konim
     # baraye search kardanesh bayad benevisim : http://localhost:8000/post/search/?query=ye chi zi
-    
+    permission_classes = (IsAuthorOrReadOnly,)
     def get(self , request , format = None):
         try:
             from django.db.models import Q
@@ -92,6 +97,7 @@ class SearchPostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek k
         
         
 class PostAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthorOrReadOnly,)
     queryset = Post.objects.all()
     serializer_class = serializers.PostSerializer
 
