@@ -52,6 +52,12 @@ INSTALLED_APPS = [
     "apis",
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+}
+
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
