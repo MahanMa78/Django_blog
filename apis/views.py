@@ -34,11 +34,15 @@ class AllPostsAPIView(APIView):
                             status = status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 """
-TODO class ListAPIView(generics.ListAPIView):
+TODO class ListAPIView(generics.ListAPIView): ---> age ListCreateAPIView bezarim ghabeliate sakhtane oist ro ham dare
 TODO    queryset = Post.objects.all()
 TODO    serializer_class = serializers.PostSerializer        
 ?---> yek rah dige baraye neveshtan apiview baraye hamaye post ha
 """
+class ListAPIView(generics.ListCreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = serializers.PostSerializer
+
 
 class SinglePostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek maghale ro search konim
  # baraye search kardanesh bayad benevisim : http://localhost:8000/post/?post_title=
@@ -87,7 +91,7 @@ class SearchPostAPIView(APIView):#baraye zamani estefade mishe ke bekhahim yek k
         
         
         
-class PostAPIView(generics.RetrieveAPIView):
+class PostAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = serializers.PostSerializer
 
