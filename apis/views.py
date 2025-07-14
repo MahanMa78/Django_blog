@@ -5,8 +5,10 @@ from rest_framework import status , generics
 from . import serializers
 from blog.models import Post
 from rest_framework.decorators import api_view
+from django.contrib.auth import get_user_model
 
-from .permissions import IsAuthorOrReadOnly
+
+from .permissions import IsAuthorOrReadOnly , IsAdminUser 
 
 class AllPostsAPIView(APIView):
 # baraye search kardanesh bayad benevisim : http://localhost:8000/post/all/
@@ -107,3 +109,14 @@ class PostAPIView(generics.RetrieveUpdateDestroyAPIView):
 #         post = Post.objects.get(title = title)
 #     except Post.DoesNotExist:
 #         return Response({"error" : "Post does not exist"})
+
+
+class UserList(generics.ListAPIView):
+    permission_classes = (IsAdminUser,)
+    queryset = get_user_model().objects.all()
+    serializer_class = serializers.UserSerializer
+    
+class UserDetail(generics.RetrieveAPIView):
+    permission_classes = (IsAdminUser , )
+    queryset = get_user_model().objects.all()
+    serializer_class = serializers.UserSerializer
