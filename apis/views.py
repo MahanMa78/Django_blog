@@ -6,7 +6,7 @@ from . import serializers
 from blog.models import Post
 from rest_framework.decorators import api_view
 from django.contrib.auth import get_user_model
-
+# *from rest_framework.permissions import IsAdminUser  ----> albate az in ham mishod estefadeh konim vali ma dar in ja az oni ke neveshtim estefaadeh mikonim
 
 from .permissions import IsAuthorOrReadOnly , IsAdminUser 
 

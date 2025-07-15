@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'bootstrap_datepicker_plus',
     "corsheaders",
+    'drf_yasg',
 
     #Local
     'blog',
