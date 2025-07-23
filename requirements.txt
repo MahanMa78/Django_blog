@@ -22,7 +22,7 @@ Markdown==3.6
 marshmallow==4.0.0
 packaging==25.0
 pillow==10.4.0
-psycopg2==2.9.10
+psycopg2-binary==2.9.10
 pydantic==2.8.2
 pydantic_core==2.20.1
 python-dotenv==1.1.1
